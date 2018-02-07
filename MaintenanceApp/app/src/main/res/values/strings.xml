@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Report</string>
+    <string name="btnReport">Report</string>
+    <string name="btnTasks">Tasks</string>
+    <string name="facebook_app_id">2477015225857121</string>
+    <string name="fb_login_protocol_scheme">fb2477015225857121</string>
+    <string name="login">Please log in to access tasks</string>
+    <string name="repHome">Home:</string>
+    <string name="repTitle">Task Title:</string>
+    <string name="repDateSubmitted">Date Submitted:</string>
+    <string name="repDateDue">Date Due:</string>
+    <string name="repDesc">Description:</string>
+    <string name="repLocation">Location:</string>
+    <string name="repPriority">Priority:</string>
+</resources>
