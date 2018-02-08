@@ -15,8 +15,7 @@ public class Task {
     private String title;
     private Date dateSubmitted;
     private Date dateDue;
-    private String Desc;
-    private Image Location;
+    private String desc;
 
     public String getHome() {
         return home;
@@ -51,21 +50,31 @@ public class Task {
     }
 
     public String getDesc() {
-        return Desc;
+        return desc;
     }
 
     public void setDesc(String desc) {
-        Desc = desc;
+        this.desc = desc;
     }
 
     public Image getLocation() {
-        return Location;
+        return location;
     }
 
     public void setLocation(Image location) {
-        Location = location;
+        this.location = location;
     }
 
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    private Image location;
+    private String notes;
 
 
 }

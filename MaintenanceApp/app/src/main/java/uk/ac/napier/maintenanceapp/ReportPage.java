@@ -41,6 +41,11 @@ public class ReportPage extends AppCompatActivity {
             public void onClick(View view){
                 Intent showFrontPage = new Intent(ReportPage.this, FrontPage.class);
                 startActivity(showFrontPage);
+
+                Task task = new Task();
+
+
+                //TODO: toast will appear at end
                 Toast.makeText(ReportPage.this, "Your task has been sent successfully.", Toast.LENGTH_LONG).show();
             }
         });

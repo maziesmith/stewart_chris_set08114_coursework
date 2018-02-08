@@ -175,6 +175,31 @@
                 android:layout_height="wrap_content"
                 app:srcCompat="@android:drawable/btn_star" />
 
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:id="@+id/lblNotes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/repNotes" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+            <EditText
+                android:id="@+id/txtNotes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textMultiLine" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
             <Button
                 android:id="@+id/btnSend"
                 android:layout_width="match_parent"

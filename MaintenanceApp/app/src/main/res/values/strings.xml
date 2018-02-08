@@ -13,4 +13,5 @@
     <string name="repLocation">Location:</string>
     <string name="repPriority">Priority:</string>
     <string name="repSend">Send Task</string>
+    <string name="repNotes">Notes (Optional):</string>
 </resources>
