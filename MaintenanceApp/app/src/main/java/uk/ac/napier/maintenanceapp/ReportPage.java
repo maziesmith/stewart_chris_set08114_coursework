@@ -12,6 +12,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import static android.R.attr.startYear;
 import static android.R.id.edit;
 
@@ -23,31 +26,37 @@ public class ReportPage extends AppCompatActivity {
         setContentView(R.layout.activity_report_page);
 
         //Home select spinner
-        final Spinner spnHome = (Spinner)findViewById(R.id.spnHome);
+        final Spinner spnHome = (Spinner) findViewById(R.id.spnHome);
         String[] homes = new String[]{"Viewpark", "Abercorn", "Spring Gardens"};
         ArrayAdapter<String> homeAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, homes);
         spnHome.setAdapter(homeAdapter);
 
         //Priority select spinner
-        Spinner spnPriority = (Spinner)findViewById(R.id.spnPriority);
+        Spinner spnPriority = (Spinner) findViewById(R.id.spnPriority);
         String[] priorities = new String[]{"Low", "Medium", "High", "Urgent"};
         ArrayAdapter<String> prioritiesAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, priorities);
         spnPriority.setAdapter(prioritiesAdapter);
         spnPriority.setSelection(prioritiesAdapter.getPosition("Medium"));
 
-        DatePicker dteDateSubmitted = (DatePicker)findViewById(R.id.dteDateSubmitted);
+        final DatePicker dteDateSubmitted = (DatePicker) findViewById(R.id.dteDateSubmitted);
         final EditText txtTitle = (EditText)findViewById(R.id.txtTitle);
+        final EditText txtDesc = (EditText)findViewById(R.id.txtDesc);
+        final EditText txtNotes = (EditText)findViewById(R.id.txtNotes);
 
-        Button btnSend = (Button)findViewById(R.id.btnSend);
-        btnSend.setOnClickListener(new View.OnClickListener(){
+        Button btnSend = (Button) findViewById(R.id.btnSend);
+        btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
+            public void onClick(View view) {
                 Intent showFrontPage = new Intent(ReportPage.this, FrontPage.class);
                 startActivity(showFrontPage);
 
                 Task task = new Task();
                 task.setHome(spnHome.getSelectedItem().toString());
                 task.setTitle(txtTitle.getText().toString());
+                //task.setDateSubmitted();
+                //task.setDateDue();
+                task.setDesc(txtDesc.getText().toString());
+                task.setNotes(txtNotes.getText().toString());
 
                 //TODO: toast will appear at end
                 Toast.makeText(ReportPage.this, "Your task has been sent successfully.", Toast.LENGTH_LONG).show();

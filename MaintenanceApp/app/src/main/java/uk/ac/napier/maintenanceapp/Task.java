@@ -11,11 +11,26 @@ import java.util.Date;
 
 public class Task {
 
+    private static int id = 1;
     private String home;
     private String title;
-    private Date dateSubmitted;
-    private Date dateDue;
+    private String dateSubmitted;
+    private String dateDue;
     private String desc;
+
+    public Task()
+    {
+        this.setId(id);
+        id++;
+    }
+
+    public static int getId() {
+        return id;
+    }
+
+    public static void setId(int id) {
+        Task.id = id;
+    }
 
     public String getHome() {
         return home;
@@ -33,19 +48,19 @@ public class Task {
         this.title = title;
     }
 
-    public Date getDateSubmitted() {
+    public String getDateSubmitted() {
         return dateSubmitted;
     }
 
-    public void setDateSubmitted(Date dateSubmitted) {
+    public void setDateSubmitted(String dateSubmitted) {
         this.dateSubmitted = dateSubmitted;
     }
 
-    public Date getDateDue() {
+    public String getDateDue() {
         return dateDue;
     }
 
-    public void setDateDue(Date dateDue) {
+    public void setDateDue(String dateDue) {
         this.dateDue = dateDue;
     }
 
