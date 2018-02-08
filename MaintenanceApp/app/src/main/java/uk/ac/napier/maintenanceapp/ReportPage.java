@@ -8,10 +8,12 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import static android.R.attr.startYear;
+import static android.R.id.edit;
 
 public class ReportPage extends AppCompatActivity {
 
@@ -21,7 +23,7 @@ public class ReportPage extends AppCompatActivity {
         setContentView(R.layout.activity_report_page);
 
         //Home select spinner
-        Spinner spnHome = (Spinner)findViewById(R.id.spnHome);
+        final Spinner spnHome = (Spinner)findViewById(R.id.spnHome);
         String[] homes = new String[]{"Viewpark", "Abercorn", "Spring Gardens"};
         ArrayAdapter<String> homeAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, homes);
         spnHome.setAdapter(homeAdapter);
@@ -34,6 +36,7 @@ public class ReportPage extends AppCompatActivity {
         spnPriority.setSelection(prioritiesAdapter.getPosition("Medium"));
 
         DatePicker dteDateSubmitted = (DatePicker)findViewById(R.id.dteDateSubmitted);
+        final EditText txtTitle = (EditText)findViewById(R.id.txtTitle);
 
         Button btnSend = (Button)findViewById(R.id.btnSend);
         btnSend.setOnClickListener(new View.OnClickListener(){
@@ -43,7 +46,8 @@ public class ReportPage extends AppCompatActivity {
                 startActivity(showFrontPage);
 
                 Task task = new Task();
-
+                task.setHome(spnHome.getSelectedItem().toString());
+                task.setTitle(txtTitle.getText().toString());
 
                 //TODO: toast will appear at end
                 Toast.makeText(ReportPage.this, "Your task has been sent successfully.", Toast.LENGTH_LONG).show();
