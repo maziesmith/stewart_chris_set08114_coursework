@@ -12,4 +12,5 @@
     <string name="repDesc">Description:</string>
     <string name="repLocation">Location:</string>
     <string name="repPriority">Priority:</string>
+    <string name="repSend">Send Task</string>
 </resources>
