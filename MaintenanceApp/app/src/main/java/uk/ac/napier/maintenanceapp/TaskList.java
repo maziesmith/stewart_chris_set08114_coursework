@@ -1,5 +1,6 @@
 package uk.ac.napier.maintenanceapp;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -11,9 +12,37 @@ public class TaskList {
     ArrayList<Task> taskList = new ArrayList<>();
 
      public void add(Task task)
+    {
+        taskList.add(task);
+    }
+
+    public Task find(int id) {
+        for (Task task : taskList) {
+            if (id == task.getId()) {
+                return task;
+            }
+        }
+        return null;
+    }
+
+    public void remove(int id)
+    {
+        for (Task task : taskList) {
+            if (id == task.getId()) {
+                taskList.remove(id);
+            }
+        }
+    }
+
+     public void complete(int id)
      {
-         taskList.add(task);
+         CompletedList completedList = new CompletedList();
+         for (Task task : taskList) {
+             if (id == task.getId()) {
+                 completedList.add(task);
+                 taskList.remove(id);
+             }
+         }
      }
 
-     public void remove()
 }

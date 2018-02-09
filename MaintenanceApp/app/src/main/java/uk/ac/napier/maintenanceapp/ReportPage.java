@@ -10,12 +10,13 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
-import static android.R.attr.startYear;
 import static android.R.id.edit;
 
 public class ReportPage extends AppCompatActivity {
@@ -38,10 +39,18 @@ public class ReportPage extends AppCompatActivity {
         spnPriority.setAdapter(prioritiesAdapter);
         spnPriority.setSelection(prioritiesAdapter.getPosition("Medium"));
 
-        final DatePicker dteDateSubmitted = (DatePicker) findViewById(R.id.dteDateSubmitted);
         final EditText txtTitle = (EditText)findViewById(R.id.txtTitle);
         final EditText txtDesc = (EditText)findViewById(R.id.txtDesc);
         final EditText txtNotes = (EditText)findViewById(R.id.txtNotes);
+        final TextView txtDateSubmitted = (TextView)findViewById(R.id.txtDateSubmitted);
+
+        Calendar dateSubmit = Calendar.getInstance();
+        int submitDay = dateSubmit.get(Calendar.DATE);
+        int submitMonth = dateSubmit.get(Calendar.MONTH) + 1;
+        int submitYear = dateSubmit.get(Calendar.YEAR);
+        final String dateSubmitString = submitDay + "/" + submitMonth + "/" + submitYear;
+
+        txtDateSubmitted.setText(dateSubmitString);
 
         Button btnSend = (Button) findViewById(R.id.btnSend);
         btnSend.setOnClickListener(new View.OnClickListener() {
@@ -53,7 +62,7 @@ public class ReportPage extends AppCompatActivity {
                 Task task = new Task();
                 task.setHome(spnHome.getSelectedItem().toString());
                 task.setTitle(txtTitle.getText().toString());
-                //task.setDateSubmitted();
+                task.setDateSubmitted(dateSubmitString);
                 //task.setDateDue();
                 task.setDesc(txtDesc.getText().toString());
                 task.setNotes(txtNotes.getText().toString());

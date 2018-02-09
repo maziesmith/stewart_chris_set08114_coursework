@@ -17,6 +17,8 @@ public class Task {
     private String dateSubmitted;
     private String dateDue;
     private String desc;
+    private Image location;
+    private String notes;
 
     public Task()
     {
@@ -88,8 +90,7 @@ public class Task {
         this.notes = notes;
     }
 
-    private Image location;
-    private String notes;
+
 
 
 }
