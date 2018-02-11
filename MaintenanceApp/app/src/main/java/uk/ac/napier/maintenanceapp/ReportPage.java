@@ -63,7 +63,17 @@ public class ReportPage extends AppCompatActivity {
                 task.setHome(spnHome.getSelectedItem().toString());
                 task.setTitle(txtTitle.getText().toString());
                 task.setDateSubmitted(dateSubmitString);
-                //task.setDateDue();
+
+                //read in due date
+                DatePicker dteDueDate = (DatePicker)findViewById(R.id.dteDateDue);
+                int dueDay = dteDueDate.getDayOfMonth();
+                int dueMonth = dteDueDate.getMonth() + 1;
+                int dueYear = dteDueDate.getYear();
+                String dateDueString = dueDay + "/" + dueMonth + "/" + dueYear;
+
+                task.setDateDue(dateDueString);
+                Toast.makeText(ReportPage.this, "" + task.getDateDue(), Toast.LENGTH_LONG).show();
+
                 task.setDesc(txtDesc.getText().toString());
                 task.setNotes(txtNotes.getText().toString());
 

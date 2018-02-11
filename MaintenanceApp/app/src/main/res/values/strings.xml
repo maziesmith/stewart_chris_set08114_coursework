@@ -2,8 +2,6 @@
     <string name="app_name">Report</string>
     <string name="btnReport">Report</string>
     <string name="btnTasks">Tasks</string>
-    <string name="facebook_app_id">2477015225857121</string>
-    <string name="fb_login_protocol_scheme">fb2477015225857121</string>
     <string name="login">Please log in to access tasks</string>
     <string name="repHome">Home:</string>
     <string name="repTitle">Task Title:</string>
@@ -14,4 +12,8 @@
     <string name="repPriority">Priority:</string>
     <string name="repSend">Send Task</string>
     <string name="repNotes">Notes (Optional):</string>
+    <string name="loginPass">Password</string>
+    <string name="loginName">Name</string>
+    <string name="btnLogin">Login</string>
+    <string name="btnRegister">Register</string>
 </resources>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -26,6 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/repHome"
+                android:textColor="#110000"
                 tools:layout_editor_absoluteX="30dp"
                 tools:layout_editor_absoluteY="16dp" />
 
@@ -48,7 +49,8 @@
                 android:id="@+id/lblTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/repTitle" />
+                android:text="@string/repTitle"
+                android:textColor="#110000"/>
 
             <Space
                 android:layout_width="match_parent"
@@ -61,7 +63,8 @@
                 android:ems="10"
                 android:inputType="textPersonName"
                 tools:layout_editor_absoluteX="30dp"
-                tools:layout_editor_absoluteY="55dp" />
+                tools:layout_editor_absoluteY="55dp"
+                />
 
             <Space
                 android:layout_width="match_parent"
@@ -71,7 +74,8 @@
                 android:id="@+id/lblPriority"
                 android:layout_width="73dp"
                 android:layout_height="wrap_content"
-                android:text="@string/repPriority" />
+                android:text="@string/repPriority"
+                android:textColor="#110000"/>
 
             <Space
                 android:layout_width="match_parent"
@@ -92,7 +96,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/repDateSubmitted"
                 tools:layout_editor_absoluteX="30dp"
-                tools:layout_editor_absoluteY="153dp" />
+                tools:layout_editor_absoluteY="153dp"
+                android:textColor="#110000"/>
 
             <Space
                 android:layout_width="match_parent"
@@ -104,7 +109,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:textAlignment="center"
-                android:text="" />
+                android:textColor="#110000"
+                />
 
             <Space
                 android:layout_width="match_parent"
@@ -116,7 +122,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/repDateDue"
                 tools:layout_editor_absoluteX="30dp"
-                tools:layout_editor_absoluteY="114dp" />
+                tools:layout_editor_absoluteY="114dp"
+                android:textColor="#110000"/>
 
             <Space
                 android:layout_width="match_parent"
@@ -130,7 +137,8 @@
                 android:calendarViewShown="false"
                 android:datePickerMode="spinner"
                 tools:layout_editor_absoluteX="116dp"
-                tools:layout_editor_absoluteY="16dp" />
+                tools:layout_editor_absoluteY="16dp"
+                android:textColor="#110000"/>
 
             <Space
                 android:layout_width="match_parent"
@@ -140,7 +148,8 @@
                 android:id="@+id/lblDesc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/repDesc" />
+                android:text="@string/repDesc"
+                android:textColor="#110000"/>
 
             <Space
                 android:layout_width="match_parent"
@@ -161,7 +170,8 @@
                 android:id="@+id/lblLocation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/repLocation" />
+                android:text="@string/repLocation"
+                android:textColor="#110000"/>
 
             <Space
                 android:layout_width="match_parent"
@@ -181,7 +191,8 @@
                 android:id="@+id/lblNotes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/repNotes" />
+                android:text="@string/repNotes"
+                android:textColor="#110000"/>
 
             <Space
                 android:layout_width="match_parent"
@@ -192,7 +203,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textMultiLine" />
+                android:inputType="textMultiLine"
+                android:textColor="#110000"/>
 
             <Space
                 android:layout_width="match_parent"
@@ -207,4 +219,4 @@
         </LinearLayout>
     </ScrollView>
 
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>
