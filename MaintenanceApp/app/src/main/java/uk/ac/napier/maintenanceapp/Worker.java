@@ -25,7 +25,12 @@ public class Worker {
     }
 
     public void setName(String name) {
-        this.name = name;
+        if(!name.isEmpty()){
+            this.name = name;
+        }
+        else{
+            throw new IllegalArgumentException("Please provide a name");
+        }
     }
 
     public String getdOB() {
