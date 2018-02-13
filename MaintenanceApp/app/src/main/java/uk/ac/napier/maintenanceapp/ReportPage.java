@@ -51,6 +51,7 @@ public class ReportPage extends AppCompatActivity {
         final String dateSubmitString = submitDay + "/" + submitMonth + "/" + submitYear;
 
         txtDateSubmitted.setText(dateSubmitString);
+        final TaskList taskList = new TaskList();
 
         Button btnSend = (Button) findViewById(R.id.btnSend);
         btnSend.setOnClickListener(new View.OnClickListener() {
@@ -72,13 +73,18 @@ public class ReportPage extends AppCompatActivity {
                 String dateDueString = dueDay + "/" + dueMonth + "/" + dueYear;
 
                 task.setDateDue(dateDueString);
-                Toast.makeText(ReportPage.this, "" + task.getDateDue(), Toast.LENGTH_LONG).show();
-
                 task.setDesc(txtDesc.getText().toString());
                 task.setNotes(txtNotes.getText().toString());
 
-                //TODO: toast will appear at end
-                Toast.makeText(ReportPage.this, "Your task has been sent successfully.", Toast.LENGTH_LONG).show();
+                int listSizeBefore = taskList.size();
+                taskList.add(task);
+                if(listSizeBefore < taskList.size()){
+                    Toast.makeText(ReportPage.this, "Your task has been sent successfully.", Toast.LENGTH_LONG).show();
+                }
+                else{
+                    Toast.makeText(ReportPage.this, "ERROR: Task not added", Toast.LENGTH_LONG).show();
+                }
+
             }
         });
     }

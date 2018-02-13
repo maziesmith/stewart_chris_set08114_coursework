@@ -13,6 +13,7 @@ public class LoginPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_page2);
 
+        /*
         Button btnRegister = (Button)findViewById(R.id.btnRegister);
         btnRegister.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -21,13 +22,14 @@ public class LoginPage extends AppCompatActivity {
                 startActivity(showRegisterPage);
             }
         });
+        */
 
         Button btnLogin = (Button)findViewById(R.id.btnLogin);
         btnLogin.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
 
-                Worker worker = new
+                Worker worker = new Worker();
 
                 Intent showTaskPage = new Intent(LoginPage.this, TaskPage.class);
                 startActivity(showTaskPage);

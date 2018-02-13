@@ -25,6 +25,10 @@ public class TaskList {
         return null;
     }
 
+    public int size(){
+        return taskList.size();
+    }
+
     public void remove(int id)
     {
         for (Task task : taskList) {

@@ -18,7 +18,8 @@
         </activity>
         <activity android:name=".ReportPage" />
         <activity android:name=".LoginPage" />
-        <activity android:name=".RegisterPage"></activity>
+        <activity android:name=".RegisterPage" />
+        <activity android:name=".TaskPage"></activity>
     </application>
 
 </manifest>

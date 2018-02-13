@@ -16,4 +16,6 @@
     <string name="loginName">Name</string>
     <string name="btnLogin">Login</string>
     <string name="btnRegister">Register</string>
+    <string name="title_activity_task_page">TaskPage</string>
+    <string name="regWelcome">Please enter all fields to complete your registration</string>
 </resources>
