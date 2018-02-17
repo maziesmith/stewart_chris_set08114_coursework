@@ -13,16 +13,15 @@ public class LoginPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_page2);
 
-        /*
         Button btnRegister = (Button)findViewById(R.id.btnRegister);
         btnRegister.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void OnClick(View view){
+            public void onClick(View view){
                 Intent showRegisterPage = new Intent(LoginPage.this, RegisterPage.class);
                 startActivity(showRegisterPage);
             }
         });
-        */
+
 
         Button btnLogin = (Button)findViewById(R.id.btnLogin);
         btnLogin.setOnClickListener(new View.OnClickListener(){

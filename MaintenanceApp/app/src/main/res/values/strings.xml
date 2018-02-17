@@ -18,4 +18,5 @@
     <string name="btnRegister">Register</string>
     <string name="title_activity_task_page">TaskPage</string>
     <string name="regWelcome">Please enter all fields to complete your registration</string>
+    <string name="regDate">Select Date of Birth</string>
 </resources>

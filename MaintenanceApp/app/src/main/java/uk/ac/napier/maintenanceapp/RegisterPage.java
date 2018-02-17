@@ -1,13 +1,21 @@
 package uk.ac.napier.maintenanceapp;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.icu.util.Calendar;
+import android.nfc.Tag;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class RegisterPage extends AppCompatActivity {
+
+    private DatePickerDialog.OnDateSetListener displayDateSetListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,22 +23,48 @@ public class RegisterPage extends AppCompatActivity {
         setContentView(R.layout.activity_register_page);
 
         try{
+            final TextView txtRegDisplay = (TextView)findViewById(R.id.txtregDisplay);
+            txtRegDisplay.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view){
+                    Calendar cal = Calendar.getInstance();
+                    int year = cal.get(Calendar.YEAR);
+                    int month = cal.get(Calendar.MONTH);
+                    int day = cal.get(Calendar.DAY_OF_MONTH);
+
+                    DatePickerDialog dateDialog = new DatePickerDialog(RegisterPage.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth, displayDateSetListener, year, month, day);
+                    dateDialog.show();
+                }
+            });
+
+            displayDateSetListener = new DatePickerDialog.OnDateSetListener()
+            {
+                @Override
+                public void onDateSet(DatePicker datePicker, int year, int month, int day){
+                    month += 1;
+                    Log.d("ReportPage", "onDateSet: dd/MM/yyyy: " + year + "/" + month + "/" + day);
+                    String date = day + "/" + month + "/" + year;
+                    txtRegDisplay.setText(date);
+                    txtRegDisplay.setBackgroundColor(00);
+                }
+
+            };
+
             Button btnRegSubmit = (Button) findViewById(R.id.btnRegSubmit);
             btnRegSubmit.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void OnClick(View view) {
+                public void onClick(View view) {
 
                     EditText txtName = (EditText) findViewById(R.id.txtRegName);
                     String name = txtName.getText().toString();
-                    EditText txtDOB = (EditText) findViewById(R.id.txtRegDOB);
-                    String dOB = txtDOB.getText().toString();
                     EditText txtPassword = (EditText) findViewById(R.id.txtRegPass);
                     String password = txtPassword.getText().toString();
+                    String dOB = txtRegDisplay.getText().toString();
 
                     Worker worker = new Worker();
                     worker.setName(name);
-                    worker.setdOB(dOB);
                     worker.setPassword(password);
+                    worker.setdOB(dOB);
 
                     WorkerList workerList = new WorkerList();
                     workerList.add(worker);
@@ -43,4 +77,3 @@ public class RegisterPage extends AppCompatActivity {
         }
         }
     }
-}
