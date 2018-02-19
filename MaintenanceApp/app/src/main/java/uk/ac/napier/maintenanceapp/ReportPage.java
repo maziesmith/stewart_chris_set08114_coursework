@@ -17,8 +17,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import static android.R.id.edit;
-
 public class ReportPage extends AppCompatActivity {
 
     @Override
@@ -57,8 +55,6 @@ public class ReportPage extends AppCompatActivity {
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent showFrontPage = new Intent(ReportPage.this, FrontPage.class);
-                startActivity(showFrontPage);
 
                 Task task = new Task();
                 task.setHome(spnHome.getSelectedItem().toString());
@@ -84,6 +80,9 @@ public class ReportPage extends AppCompatActivity {
                 else{
                     Toast.makeText(ReportPage.this, "ERROR: Task not added", Toast.LENGTH_LONG).show();
                 }
+
+                Intent showFrontPage = new Intent(ReportPage.this, FrontPage.class);
+                startActivity(showFrontPage);
 
             }
         });

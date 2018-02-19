@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class CompletedList {
 
-    ArrayList<Task> completedTasks = new ArrayList<>();
+    static ArrayList<Task> completedTasks = new ArrayList<>();
 
     public void add(Task task)
     {

@@ -28,7 +28,9 @@ public class LoginPage extends AppCompatActivity {
             @Override
             public void onClick(View view){
 
+                WorkerList workerList = new WorkerList();
                 Worker worker = new Worker();
+                worker = workerList.find(worker.getId());
 
                 Intent showTaskPage = new Intent(LoginPage.this, TaskPage.class);
                 startActivity(showTaskPage);

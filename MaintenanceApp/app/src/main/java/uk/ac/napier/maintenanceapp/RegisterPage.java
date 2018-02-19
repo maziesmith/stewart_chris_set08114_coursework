@@ -12,6 +12,9 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import static uk.ac.napier.maintenanceapp.WorkerList.workerList;
 
 public class RegisterPage extends AppCompatActivity {
 
@@ -66,8 +69,10 @@ public class RegisterPage extends AppCompatActivity {
                     worker.setPassword(password);
                     worker.setdOB(dOB);
 
-                    WorkerList workerList = new WorkerList();
                     workerList.add(worker);
+
+                    Intent showTaskPage = new Intent(RegisterPage.this, TaskPage.class);
+                    startActivity(showTaskPage);
                 }
             });
         }
@@ -75,5 +80,5 @@ public class RegisterPage extends AppCompatActivity {
         {
             throw new IllegalArgumentException(exception);
         }
-        }
     }
+}

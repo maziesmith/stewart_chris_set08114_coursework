@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class WorkerList {
 
-    ArrayList<Worker> workerList = new ArrayList<>();
+    static ArrayList<Worker> workerList = new ArrayList<>();
 
     public void add(Worker worker)
     {
@@ -32,5 +32,7 @@ public class WorkerList {
             }
         }
     }
+
+    public int size(){return workerList.size();}
 
 }
