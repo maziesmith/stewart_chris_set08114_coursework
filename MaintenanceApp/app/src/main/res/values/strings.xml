@@ -13,7 +13,7 @@
     <string name="repSend">Send Task</string>
     <string name="repNotes">Notes (Optional):</string>
     <string name="loginPass">Password</string>
-    <string name="loginName">Name</string>
+    <string name="loginId">Personal ID</string>
     <string name="btnLogin">Login</string>
     <string name="btnRegister">Register</string>
     <string name="title_activity_task_page">TaskPage</string>

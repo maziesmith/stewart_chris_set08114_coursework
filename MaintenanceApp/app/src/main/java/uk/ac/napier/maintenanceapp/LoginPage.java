@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 public class LoginPage extends AppCompatActivity {
 
@@ -29,8 +31,12 @@ public class LoginPage extends AppCompatActivity {
             public void onClick(View view){
 
                 WorkerList workerList = new WorkerList();
-                Worker worker = new Worker();
-                worker = workerList.find(worker.getId());
+                Worker worker;
+
+                EditText txtLoginId = (EditText)findViewById(R.id.txtLoginId);
+
+                worker = workerList.find(Integer.parseInt(txtLoginId.getText().toString()));
+                Toast.makeText(LoginPage.this, ""+worker.getId(), Toast.LENGTH_SHORT).show();
 
                 Intent showTaskPage = new Intent(LoginPage.this, TaskPage.class);
                 startActivity(showTaskPage);

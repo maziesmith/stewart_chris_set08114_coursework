@@ -8,12 +8,12 @@
     tools:context="uk.ac.napier.maintenanceapp.LoginPage">
 
     <EditText
-        android:id="@+id/txtLoginName"
+        android:id="@+id/txtLoginId"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:background="#11000000"
         android:ems="10"
-        android:hint="@string/loginName"
+        android:hint="@string/loginId"
         android:inputType="textPersonName"
         android:drawableLeft="@drawable/ic_action_name"
         tools:layout_editor_absoluteX="80dp"
@@ -32,7 +32,7 @@
         android:drawableLeft="@drawable/ic_action_pass"
         tools:layout_editor_absoluteX="80dp"
         tools:layout_editor_absoluteY="342dp"
-        android:layout_below="@+id/txtLoginName"
+        android:layout_below="@+id/txtLoginId"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="33dp" />
 
