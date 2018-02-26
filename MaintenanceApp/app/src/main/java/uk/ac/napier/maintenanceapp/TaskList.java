@@ -13,8 +13,7 @@ public class TaskList {
 
     static ArrayList<Task> taskList = new ArrayList<>();
 
-     public void add(Task task)
-    {
+    public void add(Task task) {
         taskList.add(task);
     }
 
@@ -27,12 +26,11 @@ public class TaskList {
         return null;
     }
 
-    public int size(){
+    public int size() {
         return taskList.size();
     }
 
-    public void remove(int id)
-    {
+    public void remove(int id) {
         for (Task task : taskList) {
             if (id == task.getId()) {
                 taskList.remove(id);
@@ -40,14 +38,21 @@ public class TaskList {
         }
     }
 
-     public void complete(int id)
-     {
-         for (Task task : taskList) {
-             if (id == task.getId()) {
-                 completedTasks.add(task);
-                 taskList.remove(id);
-             }
-         }
-     }
+    public void complete(int id) {
+        for (Task task : taskList) {
+            if (id == task.getId()) {
+                completedTasks.add(task);
+                taskList.remove(id);
+            }
+        }
+    }
+
+    public static ArrayList<String> getListTitlesID() {
+        ArrayList<String> titlesID = new ArrayList<>();
+        for (Task task : taskList) {
+            titlesID.add(task.getTitle() + "," + task.getId());
+        }
+        return titlesID;
+    }
 
 }

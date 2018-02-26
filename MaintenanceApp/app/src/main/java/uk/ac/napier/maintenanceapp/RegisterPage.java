@@ -69,7 +69,15 @@ public class RegisterPage extends AppCompatActivity {
                     worker.setPassword(password);
                     worker.setdOB(dOB);
 
+                    int listBeforeAdd = workerList.size();
                     workerList.add(worker);
+                    if(workerList.size() > listBeforeAdd)
+                    {
+                        Toast.makeText(RegisterPage.this, "Registration Successful. Worker ID: " + worker.getId(), Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        Toast.makeText(RegisterPage.this, "Registration unsuccessful", Toast.LENGTH_SHORT).show();
+                    }
 
                     Intent showTaskPage = new Intent(RegisterPage.this, TaskPage.class);
                     startActivity(showTaskPage);

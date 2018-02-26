@@ -1,5 +1,6 @@
 package uk.ac.napier.maintenanceapp;
 
+import android.graphics.Bitmap;
 import android.media.Image;
 
 import java.util.Date;
@@ -17,7 +18,7 @@ public class Task {
     private String dateSubmitted;
     private String dateDue;
     private String desc;
-    private Image location;
+    private Bitmap picture;
     private String notes;
 
     public Task()
@@ -74,12 +75,12 @@ public class Task {
         this.desc = desc;
     }
 
-    public Image getLocation() {
-        return location;
+    public Bitmap getPicture() {
+        return picture;
     }
 
-    public void setLocation(Image location) {
-        this.location = location;
+    public void setPicture(Bitmap picture) {
+        this.picture = picture;
     }
 
     public String getNotes() {

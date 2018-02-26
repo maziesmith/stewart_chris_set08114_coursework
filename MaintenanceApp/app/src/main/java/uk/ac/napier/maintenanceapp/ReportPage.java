@@ -2,6 +2,8 @@ package uk.ac.napier.maintenanceapp;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +21,8 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class ReportPage extends AppCompatActivity {
+
+    ImageView imgPicture = (ImageView)findViewById(R.id.imgPicture);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +56,17 @@ public class ReportPage extends AppCompatActivity {
         txtDateSubmitted.setText(dateSubmitString);
         final TaskList taskList = new TaskList();
 
+        final Button btnPicture = (Button)findViewById(R.id.btnAddPicture);
+        btnPicture.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(intent,0);
+                btnPicture.setText("Update Picture");
+                }
+        });
+
+
         Button btnSend = (Button) findViewById(R.id.btnSend);
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,6 +87,7 @@ public class ReportPage extends AppCompatActivity {
                 task.setDateDue(dateDueString);
                 task.setDesc(txtDesc.getText().toString());
                 task.setNotes(txtNotes.getText().toString());
+                //task.setPicture();
 
                 int listSizeBefore = taskList.size();
                 taskList.add(task);
@@ -86,5 +103,12 @@ public class ReportPage extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Bitmap bitmap = (Bitmap)data.getExtras().get("data");
+        imgPicture.setImageBitmap(bitmap);
     }
 }

@@ -8,7 +8,8 @@
     <string name="repDateSubmitted">Date Submitted:</string>
     <string name="repDateDue">Date Due:</string>
     <string name="repDesc">Description:</string>
-    <string name="repLocation">Location:</string>
+    <string name="repPicture">Photograph:</string>
+    <string name="repBtnPicture">Add Picture</string>
     <string name="repPriority">Priority:</string>
     <string name="repSend">Send Task</string>
     <string name="repNotes">Notes (Optional):</string>

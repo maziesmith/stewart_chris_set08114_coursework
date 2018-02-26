@@ -30,16 +30,32 @@ public class LoginPage extends AppCompatActivity {
             @Override
             public void onClick(View view){
 
-                WorkerList workerList = new WorkerList();
-                Worker worker;
+                try{
+                    WorkerList workerList = new WorkerList();
+                    Worker worker;
 
-                EditText txtLoginId = (EditText)findViewById(R.id.txtLoginId);
+                    EditText txtLoginId = (EditText)findViewById(R.id.txtLoginId);
+                    EditText txtLoginPass = (EditText)findViewById(R.id.txtLoginPass);
 
-                worker = workerList.find(Integer.parseInt(txtLoginId.getText().toString()));
-                Toast.makeText(LoginPage.this, ""+worker.getId(), Toast.LENGTH_SHORT).show();
+                    ;
+                    if((workerList.find(Integer.parseInt(txtLoginId.getText().toString())))==null){
+                        Toast.makeText(LoginPage.this, "Worker not found. Please try again", Toast.LENGTH_SHORT).show();
+                        txtLoginId.setText("");
+                        txtLoginPass.setText("");
 
-                Intent showTaskPage = new Intent(LoginPage.this, TaskPage.class);
-                startActivity(showTaskPage);
+                    }else{
+                        worker = workerList.find(Integer.parseInt(txtLoginId.getText().toString()));
+                        if(!txtLoginPass.getText().toString().equals(worker.getPassword())){
+                            Toast.makeText(LoginPage.this, "Password incorrect. Please try again", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Intent showTaskPage = new Intent(LoginPage.this, TaskPage.class);
+                            startActivity(showTaskPage);
+                        }
+                    }
+                }catch(Exception exception){
+                    throw new IllegalArgumentException(exception);
+                }
+
             }
         });
 
