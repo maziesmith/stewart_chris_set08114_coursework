@@ -37,7 +37,13 @@ public class LoginPage extends AppCompatActivity {
                     EditText txtLoginId = (EditText)findViewById(R.id.txtLoginId);
                     EditText txtLoginPass = (EditText)findViewById(R.id.txtLoginPass);
 
-                    ;
+                    if(txtLoginId.getText().toString().isEmpty()){
+                        Toast.makeText(LoginPage.this, "Please enter all fields", Toast.LENGTH_SHORT).show();
+                    }
+                    if(txtLoginPass.getText().toString().isEmpty()){
+                        Toast.makeText(LoginPage.this, "Please enter all fields", Toast.LENGTH_SHORT).show();
+                    }
+
                     if((workerList.find(Integer.parseInt(txtLoginId.getText().toString())))==null){
                         Toast.makeText(LoginPage.this, "Worker not found. Please try again", Toast.LENGTH_SHORT).show();
                         txtLoginId.setText("");
@@ -53,11 +59,9 @@ public class LoginPage extends AppCompatActivity {
                         }
                     }
                 }catch(Exception exception){
-                    throw new IllegalArgumentException(exception);
+                    exception.printStackTrace();
                 }
-
             }
         });
-
     }
 }

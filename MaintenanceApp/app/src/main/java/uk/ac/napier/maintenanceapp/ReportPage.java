@@ -1,6 +1,5 @@
 package uk.ac.napier.maintenanceapp;
 
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.provider.MediaStore;
@@ -15,14 +14,12 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 public class ReportPage extends AppCompatActivity {
 
-    ImageView imgPicture = (ImageView)findViewById(R.id.imgPicture);
+
+    Bitmap bitmapPicture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,10 +59,9 @@ public class ReportPage extends AppCompatActivity {
             public void onClick(View view){
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(intent,0);
-                btnPicture.setText("Update Picture");
+                //btnPicture.setText("Update Picture");
                 }
         });
-
 
         Button btnSend = (Button) findViewById(R.id.btnSend);
         btnSend.setOnClickListener(new View.OnClickListener() {
@@ -87,7 +83,7 @@ public class ReportPage extends AppCompatActivity {
                 task.setDateDue(dateDueString);
                 task.setDesc(txtDesc.getText().toString());
                 task.setNotes(txtNotes.getText().toString());
-                //task.setPicture();
+                task.setPicture(bitmapPicture);
 
                 int listSizeBefore = taskList.size();
                 taskList.add(task);
@@ -97,10 +93,8 @@ public class ReportPage extends AppCompatActivity {
                 else{
                     Toast.makeText(ReportPage.this, "ERROR: Task not added", Toast.LENGTH_LONG).show();
                 }
-
                 Intent showFrontPage = new Intent(ReportPage.this, FrontPage.class);
                 startActivity(showFrontPage);
-
             }
         });
     }
@@ -108,7 +102,8 @@ public class ReportPage extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Bitmap bitmap = (Bitmap)data.getExtras().get("data");
-        imgPicture.setImageBitmap(bitmap);
+        bitmapPicture = (Bitmap)data.getExtras().get("data");
+        ImageView imgPicture = (ImageView)findViewById(R.id.imgPicture);
+        imgPicture.setImageBitmap(bitmapPicture);
     }
 }
