@@ -38,8 +38,8 @@ public class TaskPage extends AppCompatActivity {
             for (Task task : taskList) {
                 tasks.add(task.getId() + ". " + task.getTitle());
             }
-            final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, tasks);
-            spnTasks.setAdapter(adapter);
+            final ArrayAdapter<String> taskAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, tasks);
+            spnTasks.setAdapter(taskAdapter);
             final TaskList tasklist = new TaskList();
 
 
@@ -121,7 +121,7 @@ public class TaskPage extends AppCompatActivity {
                     txtTitle.setText("");
                     ImageView imgPicture = (ImageView) findViewById(R.id.imgPicture);
                     imgPicture.setImageResource(android.R.color.transparent);
-                    adapter.notifyDataSetChanged();
+                    taskAdapter.notifyDataSetChanged();
 
                 }
             });
@@ -151,7 +151,7 @@ public class TaskPage extends AppCompatActivity {
                     txtTitle.setText("");
                     ImageView imgPicture = (ImageView) findViewById(R.id.imgPicture);
                     imgPicture.setImageResource(android.R.color.transparent);
-                    adapter.notifyDataSetChanged();
+                    taskAdapter.notifyDataSetChanged();
                 }
             });
 
