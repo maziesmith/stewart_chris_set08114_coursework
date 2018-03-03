@@ -28,7 +28,7 @@ import static uk.ac.napier.maintenanceapp.TaskList.taskList;
 
 public class TaskPage extends AppCompatActivity {
 
-    Button btnComplete = (Button) findViewById(R.id.btnCompleted);
+    //Button btnComplete = (Button) findViewById(R.id.btnCompleted);
     Bitmap bitmapPicture;
     SensorManager sensorManager;
     //current acceleration value and gravity
@@ -144,23 +144,27 @@ public class TaskPage extends AppCompatActivity {
                 }
             });
 
+            Button btnComplete = (Button) findViewById(R.id.btnCompleted);
             btnComplete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     String selectedTask = spnTasks.getSelectedItem().toString();
                     StringTokenizer taskTokens = new StringTokenizer(selectedTask, ".");
                     String stringID = taskTokens.nextToken();
-                    tasks.remove(selectedTask);
+
                     Task task;
                     task = tasklist.find(Integer.parseInt(stringID));
                     task.setCompleted(true);
+
                     Calendar completeDate = Calendar.getInstance();
                     int submitDay = completeDate.get(Calendar.DATE);
                     int submitMonth = completeDate.get(Calendar.MONTH) + 1;
                     int submitYear = completeDate.get(Calendar.YEAR);
                     String dateCompleteString = submitDay + "/" + submitMonth + "/" + submitYear;
                     task.setCompleteDate(dateCompleteString);
+                    spnTasks.setSelection(0);
                     tasklist.complete(task.getId());
+
 
                     txtDateSubmitted.setText("");
                     txtDesc.setText("");
@@ -168,8 +172,14 @@ public class TaskPage extends AppCompatActivity {
                     txtTitle.setText("");
                     ImageView imgPicture = (ImageView) findViewById(R.id.imgPicture);
                     imgPicture.setImageResource(android.R.color.transparent);
+                    Intent showFront = new Intent(TaskPage.this, FrontPage.class);
+                    startActivity(showFront);
+
+                    tasks.remove(selectedTask);
                     taskAdapter.notifyDataSetChanged();
+
                     Toast.makeText(TaskPage.this, "Task completed", Toast.LENGTH_SHORT).show();
+
                 }
             });
 
@@ -238,6 +248,7 @@ public class TaskPage extends AppCompatActivity {
             shake = shake * 0.09f + delta;
 
             if(shake > 12){
+                Button btnComplete = (Button) findViewById(R.id.btnCompleted);
                 btnComplete.performClick();
             }
         }
