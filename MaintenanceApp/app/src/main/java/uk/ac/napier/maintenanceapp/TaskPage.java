@@ -1,7 +1,12 @@
 package uk.ac.napier.maintenanceapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,7 +20,6 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.StringTokenizer;
@@ -24,7 +28,15 @@ import static uk.ac.napier.maintenanceapp.TaskList.taskList;
 
 public class TaskPage extends AppCompatActivity {
 
+    Button btnComplete = (Button) findViewById(R.id.btnCompleted);
     Bitmap bitmapPicture;
+    SensorManager sensorManager;
+    //current acceleration value and gravity
+    float accelerateVal;
+    //last acceleration value and gravity
+    float accelerateLast;
+    //difference in acceleration value from gravity
+    float shake;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +44,12 @@ public class TaskPage extends AppCompatActivity {
         setContentView(R.layout.activity_task_page2);
 
         try {
+
+            sensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
+            sensorManager.registerListener(sensorListener, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
+            accelerateVal = SensorManager.GRAVITY_EARTH;
+            accelerateLast = SensorManager.GRAVITY_EARTH;
+            shake = 0.00f;
 
             final Spinner spnTasks = (Spinner) findViewById(R.id.spnTasks);
             final ArrayList<String> tasks = new ArrayList<>();
@@ -126,7 +144,6 @@ public class TaskPage extends AppCompatActivity {
                 }
             });
 
-            Button btnComplete = (Button) findViewById(R.id.btnCompleted);
             btnComplete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -152,6 +169,7 @@ public class TaskPage extends AppCompatActivity {
                     ImageView imgPicture = (ImageView) findViewById(R.id.imgPicture);
                     imgPicture.setImageResource(android.R.color.transparent);
                     taskAdapter.notifyDataSetChanged();
+                    Toast.makeText(TaskPage.this, "Task completed", Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -206,4 +224,28 @@ public class TaskPage extends AppCompatActivity {
             exception.printStackTrace();
         }
     }
+
+    private final SensorEventListener sensorListener = new SensorEventListener() {
+        @Override
+        public void onSensorChanged(SensorEvent event) {
+            float x = event.values[0];
+            float y = event.values[1];
+            float z = event.values[2];
+
+            accelerateLast = accelerateVal;
+            accelerateVal = (float)Math.sqrt((double) x*x + y*y + z*z);
+            float delta = accelerateVal - accelerateLast;
+            shake = shake * 0.09f + delta;
+
+            if(shake > 12){
+                btnComplete.performClick();
+            }
+        }
+
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+        }
+    };
+
 }
