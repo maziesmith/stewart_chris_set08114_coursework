@@ -33,7 +33,7 @@ public class ReportPage extends AppCompatActivity {
         spnHome.setAdapter(homeAdapter);
 
         //Priority select spinner
-        Spinner spnPriority = (Spinner) findViewById(R.id.spnPriority);
+        final Spinner spnPriority = (Spinner) findViewById(R.id.spnPriority);
         String[] priorities = new String[]{"Low", "Medium", "High", "Urgent"};
         ArrayAdapter<String> prioritiesAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, priorities);
         spnPriority.setAdapter(prioritiesAdapter);
@@ -59,7 +59,7 @@ public class ReportPage extends AppCompatActivity {
             public void onClick(View view){
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(intent,0);
-                //btnPicture.setText("Update Picture");
+                btnPicture.setText("Update Picture");
                 }
         });
 
@@ -72,6 +72,7 @@ public class ReportPage extends AppCompatActivity {
                 task.setHome(spnHome.getSelectedItem().toString());
                 task.setTitle(txtTitle.getText().toString());
                 task.setDateSubmitted(dateSubmitString);
+                task.setPriority(spnPriority.getSelectedItem().toString());
 
                 //read in due date
                 DatePicker dteDueDate = (DatePicker)findViewById(R.id.dteDateDue);

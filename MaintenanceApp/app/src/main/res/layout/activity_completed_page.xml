@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
-    tools:context="uk.ac.napier.maintenanceapp.TaskPage">
+    tools:context="uk.ac.napier.maintenanceapp.CompletedPage">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -43,12 +42,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="10dp" />
 
-                <Spinner
-                    android:id="@+id/spnHome"
+                <TextView
+                    android:id="@+id/txtHomeShow"
                     android:layout_width="match_parent"
-                    android:layout_height="21dp"
-                    tools:layout_editor_absoluteX="125dp"
-                    tools:layout_editor_absoluteY="16dp" />
+                    android:layout_height="wrap_content"
+                    android:text="" />
 
                 <Space
                     android:layout_width="match_parent"
@@ -89,10 +87,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="10dp" />
 
-                <Spinner
-                    android:id="@+id/spnPriority"
-                    android:layout_width="152dp"
-                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/txtPriorityShow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="" />
 
                 <Space
                     android:layout_width="match_parent"
@@ -136,16 +135,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="10dp" />
 
-                <DatePicker
-                    android:id="@+id/dteDateDue"
-                    android:layout_width="238dp"
-                    android:layout_height="141dp"
-                    android:layout_gravity="center_horizontal"
-                    android:calendarViewShown="false"
-                    android:datePickerMode="spinner"
-                    android:textColor="#110000"
-                    tools:layout_editor_absoluteX="116dp"
-                    tools:layout_editor_absoluteY="16dp" />
+                <TextView
+                    android:id="@+id/txtDateDueShow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="" />
 
                 <Space
                     android:layout_width="match_parent"
@@ -190,12 +184,6 @@
                     android:layout_height="wrap_content"
                     app:srcCompat="@android:color/background_light" />
 
-                <Button
-                    android:id="@+id/btnAddPicture"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/repBtnPicture" />
-
                 <Space
                     android:layout_width="match_parent"
                     android:layout_height="20dp" />
@@ -224,36 +212,6 @@
                     android:layout_height="20dp" />
 
                 <Button
-                    android:id="@+id/btnUpdate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/btnUpdate" />
-
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="5dp" />
-
-                <Button
-                    android:id="@+id/btnCompleted"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/btnComplete" />
-
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="5dp" />
-
-                <Button
-                    android:id="@+id/btnDelete"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/btnDelete" />
-
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="5dp" />
-
-                <Button
                     android:id="@+id/btnHome"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -263,5 +221,4 @@
 
         </LinearLayout>
     </ScrollView>
-
 </RelativeLayout>

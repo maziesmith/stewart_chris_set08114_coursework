@@ -1,33 +1,209 @@
 package uk.ac.napier.maintenanceapp;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Calendar;
+import java.util.StringTokenizer;
 
 import static uk.ac.napier.maintenanceapp.TaskList.taskList;
 
 public class TaskPage extends AppCompatActivity {
+
+    Bitmap bitmapPicture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_page2);
 
-        ListView lstTaskView = (ListView)findViewById(R.id.lstTaskView);
-        String[] tasks = new String[]{};
-        ArrayList<String> arrayList = new ArrayList<>(Arrays.asList(tasks));
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.activity_task_page2,R.id.lstTaskView,arrayList);
-        lstTaskView.setAdapter(adapter);
-        for (String s:TaskList.getListTitlesID())
-        {
-            arrayList.add(s);
-            adapter.notifyDataSetChanged();
+        try {
+
+            final Spinner spnTasks = (Spinner) findViewById(R.id.spnTasks);
+            final ArrayList<String> tasks = new ArrayList<>();
+            for (Task task : taskList) {
+                tasks.add(task.getId() + ". " + task.getTitle());
+            }
+            final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, tasks);
+            spnTasks.setAdapter(adapter);
+            final TaskList tasklist = new TaskList();
+
+
+            //Home select spinner
+            final Spinner spnHome = (Spinner) findViewById(R.id.spnHome);
+            String[] homes = new String[]{"Viewpark", "Abercorn", "Spring Gardens"};
+            final ArrayAdapter<String> homeAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, homes);
+            spnHome.setAdapter(homeAdapter);
+
+            //Priority select spinner
+            final Spinner spnPriority = (Spinner) findViewById(R.id.spnPriority);
+            String[] priorities = new String[]{"Low", "Medium", "High", "Urgent"};
+            final ArrayAdapter<String> prioritiesAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, priorities);
+            spnPriority.setAdapter(prioritiesAdapter);
+            spnPriority.setSelection(prioritiesAdapter.getPosition("Medium"));
+
+            final EditText txtTitle = (EditText) findViewById(R.id.txtTitle);
+            final EditText txtDesc = (EditText) findViewById(R.id.txtDesc);
+            final EditText txtNotes = (EditText) findViewById(R.id.txtNotes);
+            final TextView txtDateSubmitted = (TextView) findViewById(R.id.txtDateSubmitted);
+
+            spnTasks.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    String selectedTask = spnTasks.getSelectedItem().toString();
+                    StringTokenizer taskTokens = new StringTokenizer(selectedTask, ".");
+                    String stringID = taskTokens.nextToken();
+                    Task task;
+
+                    task = tasklist.find(Integer.parseInt(stringID));
+
+                    int spinnerPosition = homeAdapter.getPosition(task.getHome());
+                    spnHome.setSelection(spinnerPosition);
+                    txtTitle.setText(task.getTitle());
+                    spinnerPosition = prioritiesAdapter.getPosition(task.getPriority());
+                    spnPriority.setSelection(spinnerPosition);
+                    txtDateSubmitted.setText(task.getDateSubmitted());
+                    StringTokenizer dateTokens = new StringTokenizer(task.getDateDue(), "/");
+                    int day = Integer.parseInt(dateTokens.nextToken());
+                    int month = Integer.parseInt(dateTokens.nextToken()) - 1;
+                    int year = Integer.parseInt(dateTokens.nextToken());
+                    DatePicker dteDueDate = (DatePicker) findViewById(R.id.dteDateDue);
+                    dteDueDate.updateDate(year, month, day);
+                    txtDesc.setText(task.getDesc());
+                    ImageView imgPicture = (ImageView) findViewById(R.id.imgPicture);
+                    imgPicture.setImageBitmap(task.getPicture());
+                    txtNotes.setText(task.getNotes());
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+
+            final Button btnPicture = (Button) findViewById(R.id.btnAddPicture);
+            btnPicture.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(intent, 0);
+                    btnPicture.setText("Update Picture");
+                }
+            });
+
+            Button btnDelete = (Button) findViewById(R.id.btnDelete);
+            btnDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String selectedTask = spnTasks.getSelectedItem().toString();
+                    StringTokenizer taskTokens = new StringTokenizer(selectedTask, ".");
+                    String stringID = taskTokens.nextToken();
+
+                    tasklist.remove(Integer.parseInt(stringID));
+
+                    txtDateSubmitted.setText("");
+                    txtDesc.setText("");
+                    txtNotes.setText("");
+                    txtTitle.setText("");
+                    ImageView imgPicture = (ImageView) findViewById(R.id.imgPicture);
+                    imgPicture.setImageResource(android.R.color.transparent);
+                    adapter.notifyDataSetChanged();
+
+                }
+            });
+
+            Button btnComplete = (Button) findViewById(R.id.btnCompleted);
+            btnComplete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String selectedTask = spnTasks.getSelectedItem().toString();
+                    StringTokenizer taskTokens = new StringTokenizer(selectedTask, ".");
+                    String stringID = taskTokens.nextToken();
+                    tasks.remove(selectedTask);
+                    Task task;
+                    task = tasklist.find(Integer.parseInt(stringID));
+                    task.setCompleted(true);
+                    Calendar completeDate = Calendar.getInstance();
+                    int submitDay = completeDate.get(Calendar.DATE);
+                    int submitMonth = completeDate.get(Calendar.MONTH) + 1;
+                    int submitYear = completeDate.get(Calendar.YEAR);
+                    String dateCompleteString = submitDay + "/" + submitMonth + "/" + submitYear;
+                    task.setCompleteDate(dateCompleteString);
+                    tasklist.complete(task.getId());
+
+                    txtDateSubmitted.setText("");
+                    txtDesc.setText("");
+                    txtNotes.setText("");
+                    txtTitle.setText("");
+                    ImageView imgPicture = (ImageView) findViewById(R.id.imgPicture);
+                    imgPicture.setImageResource(android.R.color.transparent);
+                    adapter.notifyDataSetChanged();
+                }
+            });
+
+            Button btnHome = (Button)findViewById(R.id.btnHome);
+            btnHome.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent home = new Intent(TaskPage.this, FrontPage.class);
+                    startActivity(home);
+                }
+            });
+
+            Button btnUpdate = (Button) findViewById(R.id.btnUpdate);
+            btnUpdate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String selectedTask = spnTasks.getSelectedItem().toString();
+                    StringTokenizer taskTokens = new StringTokenizer(selectedTask, ".");
+                    String stringID = taskTokens.nextToken();
+                    Task task;
+                    task = tasklist.find(Integer.parseInt(stringID));
+
+                    //read in due date
+                    DatePicker dteDueDate = (DatePicker) findViewById(R.id.dteDateDue);
+                    int dueDay = dteDueDate.getDayOfMonth();
+                    int dueMonth = dteDueDate.getMonth() + 1;
+                    int dueYear = dteDueDate.getYear();
+                    String dateDueString = dueDay + "/" + dueMonth + "/" + dueYear;
+
+                    task.setHome(spnHome.getSelectedItem().toString());
+                    task.setTitle(txtTitle.getText().toString());
+                    task.setPriority(spnPriority.getSelectedItem().toString());
+                    task.setDateDue(dateDueString);
+                    task.setDesc(txtDesc.getText().toString());
+                    task.setNotes(txtNotes.getText().toString());
+                    task.setPicture(bitmapPicture);
+                }
+            });
+        }catch(Exception exception){
+            exception.printStackTrace();
         }
-       // String[] tasks = TaskList.getListTitlesID();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        try {
+            super.onActivityResult(requestCode, resultCode, data);
+            bitmapPicture = (Bitmap) data.getExtras().get("data");
+            ImageView imgPicture = (ImageView) findViewById(R.id.imgPicture);
+            imgPicture.setImageBitmap(bitmapPicture);
+        }catch(Exception exception){
+            exception.printStackTrace();
+        }
     }
 }

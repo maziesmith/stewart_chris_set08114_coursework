@@ -6,17 +6,17 @@ package uk.ac.napier.maintenanceapp;
 
 public class Worker {
 
-    private static int id = 1;
+    private static int last_id = 1;
+    private int id;
     private String name;
     private String dOB;
     private String password;
 
     public Worker(){
-        this.id = id;
-        id++;
+        id = last_id++;
     }
 
-    public static int getId() {
+    public int getId() {
         return id;
     }
 

@@ -20,4 +20,9 @@
     <string name="title_activity_task_page">TaskPage</string>
     <string name="regWelcome">Please enter all fields to complete your registration</string>
     <string name="regDate">Select Date of Birth</string>
+    <string name="btnComplete">Complete</string>
+    <string name="btnDelete">Delete</string>
+    <string name="btnUpdate">Update</string>
+    <string name="btnHome">Return to Home Page</string>
+    <string name="btnCompletedTasks">Completed Tasks</string>
 </resources>

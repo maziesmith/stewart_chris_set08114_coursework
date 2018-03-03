@@ -7,32 +7,55 @@ import java.util.Date;
 
 /**
  * Created by stech on 08/02/2018.
- * Class to old the details of a task created
+ * Class to hold the details of a task created
  */
 
 public class Task {
 
-    private static int id = 1;
+    private static int last_id = 1;
+    private int id;
     private String home;
     private String title;
+    private String priority;
     private String dateSubmitted;
     private String dateDue;
     private String desc;
     private Bitmap picture;
     private String notes;
+    private Boolean completed;
+    private String completeDate;
 
     public Task()
     {
-        this.setId(id);
-        id++;
+        id = last_id++;
     }
 
-    public static int getId() {
+    public Boolean getCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(Boolean completed) {
+        this.completed = completed;
+    }
+
+    public String getCompleteDate() {
+        return completeDate;
+    }
+
+    public void setCompleteDate(String completeDate) {
+        this.completeDate = completeDate;
+    }
+
+    public String getPriority() {
+        return priority;
+    }
+
+    public void setPriority(String priority) {
+        this.priority = priority;
+    }
+
+    public int getId() {
         return id;
-    }
-
-    public static void setId(int id) {
-        Task.id = id;
     }
 
     public String getHome() {
