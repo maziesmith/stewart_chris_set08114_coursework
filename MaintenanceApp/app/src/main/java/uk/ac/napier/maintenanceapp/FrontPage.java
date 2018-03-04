@@ -31,7 +31,7 @@ public class FrontPage extends AppCompatActivity {
         setContentView(R.layout.activity_front_page);
 
         try{
-            FileInputStream inputStream = openFileInput("C:\\Users\\stech\\Desktop\\New folder\\workerList.txt");
+            FileInputStream inputStream = openFileInput("workerList");
             ObjectInputStream in = new ObjectInputStream(inputStream);
             int sizeBefore = workerList.size();
             workerList = (ArrayList<Worker>)in.readObject();

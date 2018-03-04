@@ -88,7 +88,7 @@ public class RegisterPage extends AppCompatActivity {
                         Toast.makeText(RegisterPage.this, "Registration unsuccessful", Toast.LENGTH_SHORT).show();
                     }
                     try {
-                        FileOutputStream fileOutputStream = openFileOutput("C:\\Users\\stech\\Desktop\\New folder\\workerList.txt", Context.MODE_PRIVATE);
+                        FileOutputStream fileOutputStream = openFileOutput("workerList", Context.MODE_PRIVATE);
                         ObjectOutputStream out = new ObjectOutputStream(fileOutputStream);
                         out.writeObject(workerList);
                         out.close();
