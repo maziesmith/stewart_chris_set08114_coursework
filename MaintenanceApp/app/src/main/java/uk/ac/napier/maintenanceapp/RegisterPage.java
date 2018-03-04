@@ -1,8 +1,10 @@
 package uk.ac.napier.maintenanceapp;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.icu.util.Calendar;
+import android.net.Uri;
 import android.nfc.Tag;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +15,13 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 import static uk.ac.napier.maintenanceapp.WorkerList.workerList;
 
@@ -78,7 +87,16 @@ public class RegisterPage extends AppCompatActivity {
                     else{
                         Toast.makeText(RegisterPage.this, "Registration unsuccessful", Toast.LENGTH_SHORT).show();
                     }
+                    try {
+                        FileOutputStream fileOutputStream = openFileOutput("C:\\Users\\stech\\Desktop\\New folder\\workerList.txt", Context.MODE_PRIVATE);
+                        ObjectOutputStream out = new ObjectOutputStream(fileOutputStream);
+                        out.writeObject(workerList);
+                        out.close();
+                        fileOutputStream.close();
 
+                    }catch(Exception e){
+                        e.printStackTrace();
+                    }
                     Intent showTaskPage = new Intent(RegisterPage.this, TaskPage.class);
                     startActivity(showTaskPage);
                 }
@@ -86,7 +104,7 @@ public class RegisterPage extends AppCompatActivity {
         }
         catch(Exception exception)
         {
-            throw new IllegalArgumentException(exception);
+            exception.printStackTrace();
         }
     }
 }

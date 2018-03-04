@@ -8,6 +8,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
+import java.util.ArrayList;
+
+import static uk.ac.napier.maintenanceapp.WorkerList.workerList;
+
 public class LoginPage extends AppCompatActivity {
 
     @Override
@@ -24,13 +30,13 @@ public class LoginPage extends AppCompatActivity {
             }
         });
 
-
         Button btnLogin = (Button)findViewById(R.id.btnLogin);
         btnLogin.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
 
                 try{
+
                     WorkerList workerList = new WorkerList();
                     Worker worker;
 

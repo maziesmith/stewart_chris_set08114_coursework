@@ -17,12 +17,34 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
+import java.util.ArrayList;
+
+import static uk.ac.napier.maintenanceapp.WorkerList.workerList;
+
 public class FrontPage extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_front_page);
+
+        try{
+            FileInputStream inputStream = openFileInput("C:\\Users\\stech\\Desktop\\New folder\\workerList.txt");
+            ObjectInputStream in = new ObjectInputStream(inputStream);
+            int sizeBefore = workerList.size();
+            workerList = (ArrayList<Worker>)in.readObject();
+            int sizeAfter = workerList.size();
+            Worker worker = new Worker();
+            worker.setLast_id(worker.getLast_id()+(sizeAfter - sizeBefore)-1);
+            in.close();
+            inputStream.close();
+
+        }catch(Exception exception){
+            Toast.makeText(this, "DIDNT WORK", Toast.LENGTH_SHORT).show();
+            exception.printStackTrace();
+        }
 
         Button btnReport = (Button) findViewById(R.id.btnReport);
         btnReport.setOnClickListener(new View.OnClickListener() {

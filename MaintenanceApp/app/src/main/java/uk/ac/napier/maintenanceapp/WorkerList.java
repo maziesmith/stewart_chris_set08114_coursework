@@ -1,14 +1,17 @@
 package uk.ac.napier.maintenanceapp;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by stech on 11/02/2018.
  */
 
-public class WorkerList {
+public class WorkerList implements Serializable {
 
-    static ArrayList<Worker> workerList = new ArrayList<>();
+    private static int serialiseVersionUID = 4958;
+
+    public static ArrayList<Worker> workerList = new ArrayList<>();
 
     public void add(Worker worker)
     {

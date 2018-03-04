@@ -1,10 +1,14 @@
 package uk.ac.napier.maintenanceapp;
 
+import java.io.Serializable;
+
 /**
  * Created by stech on 11/02/2018.
  */
 
-public class Worker {
+public class Worker implements Serializable{
+
+    private static int serialiseVersionUID = 1324;
 
     private static int last_id = 1;
     private int id;
@@ -14,6 +18,14 @@ public class Worker {
 
     public Worker(){
         id = last_id++;
+    }
+
+    public static int getLast_id() {
+        return last_id;
+    }
+
+    public static void setLast_id(int last_id) {
+        Worker.last_id = last_id;
     }
 
     public int getId() {
