@@ -73,16 +73,18 @@ public class Task implements Serializable{
         return home;
     }
 
-    public void setHome(String home) {
-        this.home = home;
-    }
+    public void setHome(String home) {this.home = home;}
 
     public String getTitle() {
         return title;
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        if(!title.contentEquals("")){
+            this.title = title;
+        }else{
+            throw new RuntimeException("Please provide a title");
+        }
     }
 
     public String getDateSubmitted() {
@@ -97,16 +99,18 @@ public class Task implements Serializable{
         return dateDue;
     }
 
-    public void setDateDue(String dateDue) {
-        this.dateDue = dateDue;
-    }
+    public void setDateDue(String dateDue) {this.dateDue = dateDue;}
 
     public String getDesc() {
         return desc;
     }
 
     public void setDesc(String desc) {
-        this.desc = desc;
+        if(!desc.isEmpty()){
+            this.desc = desc;
+        }else{
+            throw new RuntimeException("Please provied a description");
+        }
     }
 
     public Bitmap getPicture() {
