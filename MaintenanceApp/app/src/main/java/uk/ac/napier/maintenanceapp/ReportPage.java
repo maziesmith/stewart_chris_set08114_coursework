@@ -143,6 +143,8 @@ public class ReportPage extends AppCompatActivity {
                 .setSmallIcon(R.drawable.logo)
                 .setContentTitle("New Urgent Task")
                 .setContentText(task.getTitle())
+                .setLargeIcon(task.getPicture())
+                .setStyle(new NotificationCompat.BigPictureStyle().bigPicture(bitmapPicture))
                 .setContentIntent(pendingIntent);
 
         Notification urgentNotification = builder.build();
