@@ -1,6 +1,7 @@
 package uk.ac.napier.maintenanceapp;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import static uk.ac.napier.maintenanceapp.CompletedList.completedTasks;
@@ -9,7 +10,9 @@ import static uk.ac.napier.maintenanceapp.CompletedList.completedTasks;
  * Created by stech on 08/02/2018.
  */
 
-public class TaskList {
+public class TaskList implements Serializable{
+
+    private static int serialiseVersionUID = 4569;
 
     static ArrayList<Task> taskList = new ArrayList<>();
 

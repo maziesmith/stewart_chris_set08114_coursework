@@ -3,6 +3,7 @@ package uk.ac.napier.maintenanceapp;
 import android.graphics.Bitmap;
 import android.media.Image;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -10,7 +11,9 @@ import java.util.Date;
  * Class to hold the details of a task created
  */
 
-public class Task {
+public class Task implements Serializable{
+
+    private static int serialiseVersionUID = 2589;
 
     private static int last_id = 1;
     private int id;
@@ -28,6 +31,14 @@ public class Task {
     public Task()
     {
         id = last_id++;
+    }
+
+    public static int getLast_id() {
+        return last_id;
+    }
+
+    public static void setLast_id(int last_id) {
+        Task.last_id = last_id;
     }
 
     public Boolean getCompleted() {

@@ -20,6 +20,9 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.StringTokenizer;
@@ -59,7 +62,6 @@ public class TaskPage extends AppCompatActivity {
             final ArrayAdapter<String> taskAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, tasks);
             spnTasks.setAdapter(taskAdapter);
             final TaskList tasklist = new TaskList();
-
 
             //Home select spinner
             final Spinner spnHome = (Spinner) findViewById(R.id.spnHome);
@@ -141,6 +143,7 @@ public class TaskPage extends AppCompatActivity {
                     imgPicture.setImageResource(android.R.color.transparent);
                     taskAdapter.notifyDataSetChanged();
 
+                    write();
                 }
             });
 
@@ -180,6 +183,7 @@ public class TaskPage extends AppCompatActivity {
 
                     Toast.makeText(TaskPage.this, "Task completed", Toast.LENGTH_SHORT).show();
 
+                    write();
                 }
             });
 
@@ -216,6 +220,8 @@ public class TaskPage extends AppCompatActivity {
                     task.setDesc(txtDesc.getText().toString());
                     task.setNotes(txtNotes.getText().toString());
                     task.setPicture(bitmapPicture);
+
+                    write();
                 }
             });
         }catch(Exception exception){
@@ -259,4 +265,16 @@ public class TaskPage extends AppCompatActivity {
         }
     };
 
+    public void write(){
+        try {
+            FileOutputStream fileOutputStream = openFileOutput("taskList", Context.MODE_PRIVATE);
+            ObjectOutputStream out = new ObjectOutputStream(fileOutputStream);
+            out.writeObject(taskList);
+            out.close();
+            fileOutputStream.close();
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
 }

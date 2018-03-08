@@ -79,7 +79,7 @@ public class CompletedPage extends AppCompatActivity {
                     dteDueDate.updateDate(year, month, day);
                     txtDesc.setText(task.getDesc());
                     ImageView imgPicture = (ImageView) findViewById(R.id.imgPicture);
-                    imgPicture.setImageBitmap(task.getPicture());
+                    //imgPicture.setImageBitmap(task.getPicture());
                     txtNotes.setText(task.getNotes());
                 }
 

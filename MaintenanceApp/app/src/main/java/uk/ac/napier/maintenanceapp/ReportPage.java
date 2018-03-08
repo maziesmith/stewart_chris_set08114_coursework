@@ -1,10 +1,17 @@
 package uk.ac.napier.maintenanceapp;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.provider.MediaStore;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.NotificationCompat;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -14,6 +21,9 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
 import java.util.Calendar;
 
 public class ReportPage extends AppCompatActivity {
@@ -84,7 +94,7 @@ public class ReportPage extends AppCompatActivity {
                 task.setDateDue(dateDueString);
                 task.setDesc(txtDesc.getText().toString());
                 task.setNotes(txtNotes.getText().toString());
-                task.setPicture(bitmapPicture);
+                //task.setPicture(bitmapPicture);
 
                 int listSizeBefore = taskList.size();
                 taskList.add(task);
@@ -94,8 +104,23 @@ public class ReportPage extends AppCompatActivity {
                 else{
                     Toast.makeText(ReportPage.this, "ERROR: Task not added", Toast.LENGTH_LONG).show();
                 }
+
+                try {
+                    FileOutputStream fileOutputStream = openFileOutput("taskList", Context.MODE_PRIVATE);
+                    ObjectOutputStream out = new ObjectOutputStream(fileOutputStream);
+                    out.writeObject(taskList);
+                    out.close();
+                    fileOutputStream.close();
+
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+                if(task.getPriority().contentEquals("Urgent")){
+                    createNotification(task);
+                }
                 Intent showFrontPage = new Intent(ReportPage.this, FrontPage.class);
                 startActivity(showFrontPage);
+
             }
         });
     }
@@ -107,4 +132,21 @@ public class ReportPage extends AppCompatActivity {
         ImageView imgPicture = (ImageView)findViewById(R.id.imgPicture);
         imgPicture.setImageBitmap(bitmapPicture);
     }
+
+    private void createNotification(Task task){
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+        Intent showLogin = new Intent(this, LoginPage.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, (int)System.currentTimeMillis(), showLogin, 0);
+
+        builder
+                .setSmallIcon(R.drawable.logo)
+                .setContentTitle("New Urgent Task")
+                .setContentText(task.getTitle())
+                .setContentIntent(pendingIntent);
+
+        Notification urgentNotification = builder.build();
+        NotificationManagerCompat.from(this).notify(0, urgentNotification);
+    }
+
 }
