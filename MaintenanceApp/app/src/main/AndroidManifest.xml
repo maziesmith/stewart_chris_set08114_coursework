@@ -5,12 +5,14 @@
     <uses-feature
         android:name="android.hardware.camera2"
         android:required="true" />
-    <uses-feature android:name="android.hardware.sensor.accelerometer"
+    <uses-feature
+        android:name="android.hardware.sensor.accelerometer"
         android:required="true" />
+
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -30,7 +32,9 @@
         <activity android:name=".LoginPage" />
         <activity android:name=".RegisterPage" />
         <activity android:name=".TaskPage" />
-        <activity android:name=".CompletedPage"></activity>
+        <activity android:name=".CompletedPage" />
+        <activity android:name=".SettingsPage" />
+        <activity android:name=".AccountsPage" />
     </application>
 
 </manifest>

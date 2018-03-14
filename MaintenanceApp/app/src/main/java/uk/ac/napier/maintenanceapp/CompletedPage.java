@@ -50,7 +50,7 @@ public class CompletedPage extends AppCompatActivity {
             spnPriority.setAdapter(prioritiesAdapter);
             spnPriority.setSelection(prioritiesAdapter.getPosition("Medium"));
 
-            final EditText txtTitle = (EditText) findViewById(R.id.txtTitle);
+            final EditText txtTitle = (EditText)findViewById(R.id.txtTitle);
             final EditText txtDesc = (EditText) findViewById(R.id.txtDesc);
             final EditText txtNotes = (EditText) findViewById(R.id.txtNotes);
             final TextView txtDateSubmitted = (TextView) findViewById(R.id.txtDateSubmitted);
@@ -79,7 +79,7 @@ public class CompletedPage extends AppCompatActivity {
                     dteDueDate.updateDate(year, month, day);
                     txtDesc.setText(task.getDesc());
                     ImageView imgPicture = (ImageView) findViewById(R.id.imgPicture);
-                    //imgPicture.setImageBitmap(task.getPicture());
+                    imgPicture.setImageBitmap(task.getPicture());
                     txtNotes.setText(task.getNotes());
                 }
 

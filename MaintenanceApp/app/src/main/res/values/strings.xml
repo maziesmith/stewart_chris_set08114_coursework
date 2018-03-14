@@ -25,4 +25,14 @@
     <string name="btnUpdate">Update</string>
     <string name="btnHome">Return to Home Page</string>
     <string name="btnCompletedTasks">Completed Tasks</string>
+    <string name="title_activity_settings_page">Settings</string>
+    <string name="btnAccounts">View All Worker Accounts</string>
+    <string name="btnResetAccs">Reset All Worker Accounts</string>
+    <string name="btnResetTasks">Reset All Outstanding Tasks</string>
+    <string name="lblID">Worker ID:</string>
+    <string name="btnEditAcc">Edit Account</string>
+    <string name="btnSave">Save</string>
+    <string name="lblChangePic">Change photo</string>
+    <string name="btnSet">Set</string>
+    <string name="btnRotate">Rotate</string>
 </resources>

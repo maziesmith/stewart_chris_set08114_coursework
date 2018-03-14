@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class WorkerList implements Serializable {
 
-    private static int serialiseVersionUID = 4958;
+    private static int serialiseVersionUID = 4158;
 
     public static ArrayList<Worker> workerList = new ArrayList<>();
 
@@ -26,16 +26,4 @@ public class WorkerList implements Serializable {
         }
         return null;
     }
-
-    public void remove(int id)
-    {
-        for (Worker worker : workerList) {
-            if (id == worker.getId()) {
-                workerList.remove(id);
-            }
-        }
-    }
-
-    public int size(){return workerList.size();}
-
 }

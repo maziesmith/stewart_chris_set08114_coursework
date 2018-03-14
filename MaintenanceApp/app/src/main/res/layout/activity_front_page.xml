@@ -49,4 +49,14 @@
         android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/btnTasks" />
 
+    <ImageView
+        android:id="@+id/imgFPSettings"
+        android:layout_height="30dp"
+        android:layout_width="30dp"
+        app:srcCompat="@drawable/settings"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="9dp"
+        android:layout_marginTop="9dp" />
+
 </RelativeLayout>

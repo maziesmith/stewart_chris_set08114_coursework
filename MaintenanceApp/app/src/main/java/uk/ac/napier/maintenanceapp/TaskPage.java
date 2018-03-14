@@ -10,6 +10,7 @@ import android.hardware.SensorManager;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -20,7 +21,6 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
@@ -54,6 +54,7 @@ public class TaskPage extends AppCompatActivity {
             accelerateLast = SensorManager.GRAVITY_EARTH;
             shake = 0.00f;
 
+
             final Spinner spnTasks = (Spinner) findViewById(R.id.spnTasks);
             final ArrayList<String> tasks = new ArrayList<>();
             for (Task task : taskList) {
@@ -61,7 +62,7 @@ public class TaskPage extends AppCompatActivity {
             }
             final ArrayAdapter<String> taskAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, tasks);
             spnTasks.setAdapter(taskAdapter);
-            final TaskList tasklist = new TaskList();
+            final TaskList list = new TaskList();
 
             //Home select spinner
             final Spinner spnHome = (Spinner) findViewById(R.id.spnHome);
@@ -89,7 +90,7 @@ public class TaskPage extends AppCompatActivity {
                     String stringID = taskTokens.nextToken();
                     Task task;
 
-                    task = tasklist.find(Integer.parseInt(stringID));
+                    task = list.find(Integer.parseInt(stringID));
 
                     int spinnerPosition = homeAdapter.getPosition(task.getHome());
                     spnHome.setSelection(spinnerPosition);
@@ -133,7 +134,7 @@ public class TaskPage extends AppCompatActivity {
                     StringTokenizer taskTokens = new StringTokenizer(selectedTask, ".");
                     String stringID = taskTokens.nextToken();
 
-                    tasklist.remove(Integer.parseInt(stringID));
+                    list.remove(Integer.parseInt(stringID));
 
                     txtDateSubmitted.setText("");
                     txtDesc.setText("");
@@ -151,39 +152,43 @@ public class TaskPage extends AppCompatActivity {
             btnComplete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String selectedTask = spnTasks.getSelectedItem().toString();
-                    StringTokenizer taskTokens = new StringTokenizer(selectedTask, ".");
-                    String stringID = taskTokens.nextToken();
+                    if (spnTasks.getSelectedItem() != null) {
+                        String selectedTask = spnTasks.getSelectedItem().toString();
+                        StringTokenizer taskTokens = new StringTokenizer(selectedTask, ".");
+                        String stringID = taskTokens.nextToken();
 
-                    Task task;
-                    task = tasklist.find(Integer.parseInt(stringID));
-                    task.setCompleted(true);
+                        Task task;
+                        task = list.find(Integer.parseInt(stringID));
+                        task.setCompleted(true);
 
-                    Calendar completeDate = Calendar.getInstance();
-                    int submitDay = completeDate.get(Calendar.DATE);
-                    int submitMonth = completeDate.get(Calendar.MONTH) + 1;
-                    int submitYear = completeDate.get(Calendar.YEAR);
-                    String dateCompleteString = submitDay + "/" + submitMonth + "/" + submitYear;
-                    task.setCompleteDate(dateCompleteString);
-                    spnTasks.setSelection(0);
-                    tasklist.complete(task.getId());
+                        Calendar completeDate = Calendar.getInstance();
+                        int submitDay = completeDate.get(Calendar.DATE);
+                        int submitMonth = completeDate.get(Calendar.MONTH) + 1;
+                        int submitYear = completeDate.get(Calendar.YEAR);
+                        String dateCompleteString = submitDay + "/" + submitMonth + "/" + submitYear;
+                        task.setCompleteDate(dateCompleteString);
+                        spnTasks.setSelection(0);
+                        list.complete(task.getId());
 
+                        txtDateSubmitted.setText("");
+                        txtDesc.setText("");
+                        txtNotes.setText("");
+                        txtTitle.setText("");
+                        ImageView imgPicture = (ImageView) findViewById(R.id.imgPicture);
+                        imgPicture.setImageResource(android.R.color.transparent);
+                        Intent showFront = new Intent(TaskPage.this, FrontPage.class);
+                        startActivity(showFront);
 
-                    txtDateSubmitted.setText("");
-                    txtDesc.setText("");
-                    txtNotes.setText("");
-                    txtTitle.setText("");
-                    ImageView imgPicture = (ImageView) findViewById(R.id.imgPicture);
-                    imgPicture.setImageResource(android.R.color.transparent);
-                    Intent showFront = new Intent(TaskPage.this, FrontPage.class);
-                    startActivity(showFront);
+                        tasks.remove(selectedTask);
+                        taskAdapter.notifyDataSetChanged();
 
-                    tasks.remove(selectedTask);
-                    taskAdapter.notifyDataSetChanged();
+                        Toast.makeText(TaskPage.this, "Task completed", Toast.LENGTH_SHORT).show();
 
-                    Toast.makeText(TaskPage.this, "Task completed", Toast.LENGTH_SHORT).show();
-
-                    write();
+                        write();
+                    }
+                    else {
+                        Log.v("NothingSelected", "NOthing");
+                    }
                 }
             });
 
@@ -204,28 +209,33 @@ public class TaskPage extends AppCompatActivity {
                     StringTokenizer taskTokens = new StringTokenizer(selectedTask, ".");
                     String stringID = taskTokens.nextToken();
                     Task task;
-                    task = tasklist.find(Integer.parseInt(stringID));
+                    task = list.find(Integer.parseInt(stringID));
 
-                    //read in due date
-                    DatePicker dteDueDate = (DatePicker) findViewById(R.id.dteDateDue);
-                    int dueDay = dteDueDate.getDayOfMonth();
-                    int dueMonth = dteDueDate.getMonth() + 1;
-                    int dueYear = dteDueDate.getYear();
-                    String dateDueString = dueDay + "/" + dueMonth + "/" + dueYear;
+                    try {
+                        //read in due date
+                        DatePicker dteDueDate = (DatePicker) findViewById(R.id.dteDateDue);
+                        int dueDay = dteDueDate.getDayOfMonth();
+                        int dueMonth = dteDueDate.getMonth() + 1;
+                        int dueYear = dteDueDate.getYear();
+                        String dateDueString = dueDay + "/" + dueMonth + "/" + dueYear;
 
-                    task.setHome(spnHome.getSelectedItem().toString());
-                    task.setTitle(txtTitle.getText().toString());
-                    task.setPriority(spnPriority.getSelectedItem().toString());
-                    task.setDateDue(dateDueString);
-                    task.setDesc(txtDesc.getText().toString());
-                    task.setNotes(txtNotes.getText().toString());
-                    task.setPicture(bitmapPicture);
+                        task.setHome(spnHome.getSelectedItem().toString());
+                        task.setTitle(txtTitle.getText().toString());
+                        task.setPriority(spnPriority.getSelectedItem().toString());
+                        task.setDateDue(dateDueString);
+                        task.setDesc(txtDesc.getText().toString());
+                        task.setNotes(txtNotes.getText().toString());
+                        task.setPicture(bitmapPicture);
+                        Toast.makeText(TaskPage.this, "Task updated", Toast.LENGTH_SHORT).show();
 
-                    write();
+                        write();
+                    }catch(Exception exception){
+                        Toast.makeText(TaskPage.this, exception.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
         }catch(Exception exception){
-            exception.printStackTrace();
+            Toast.makeText(this, exception.getMessage(), Toast.LENGTH_SHORT).show();;
         }
     }
 

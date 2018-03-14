@@ -13,7 +13,7 @@ import java.util.Date;
 
 public class Task implements Serializable{
 
-    private static int serialiseVersionUID = 2589;
+    private static int serialiseVersionUID = 2599;
 
     private static int last_id = 1;
     private int id;
@@ -109,7 +109,7 @@ public class Task implements Serializable{
         if(!desc.isEmpty()){
             this.desc = desc;
         }else{
-            throw new RuntimeException("Please provied a description");
+            throw new RuntimeException("Please provide a description");
         }
     }
 

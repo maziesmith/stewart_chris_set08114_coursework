@@ -12,9 +12,9 @@ import static uk.ac.napier.maintenanceapp.CompletedList.completedTasks;
 
 public class TaskList implements Serializable{
 
-    private static int serialiseVersionUID = 4569;
+    private static int serialiseVersionUID = 45800088;
 
-    static ArrayList<Task> taskList = new ArrayList<>();
+    public static ArrayList<Task> taskList = new ArrayList<>();
 
     public void add(Task task) {
         taskList.add(task);
@@ -34,28 +34,19 @@ public class TaskList implements Serializable{
     }
 
     public void remove(int id) {
-        for (Task task : taskList) {
-            if (id == task.getId()) {
-                taskList.remove(id);
+        for (int i = 0; i < taskList.size(); i++) {
+            if (id == taskList.get(i).getId()) {
+                taskList.remove(i);
             }
         }
     }
 
     public void complete(int id) {
-        for (Task task : taskList) {
-            if (id == task.getId()) {
-                completedTasks.add(task);
+        for (int i = 0; i < taskList.size(); i++) {
+            if (id == taskList.get(i).getId()) {
+                completedTasks.add(taskList.get(i));
                 taskList.remove(id);
             }
         }
     }
-
-    public static ArrayList<String> getListTitlesID() {
-        ArrayList<String> titlesID = new ArrayList<>();
-        for (Task task : taskList) {
-            titlesID.add(task.getTitle() + "," + task.getId());
-        }
-        return titlesID;
-    }
-
 }

@@ -1,22 +1,15 @@
 package uk.ac.napier.maintenanceapp;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.LocationSettingsRequest;
-import com.google.android.gms.tasks.OnSuccessListener;
-
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
@@ -30,6 +23,7 @@ public class FrontPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_front_page);
+
 
         readWorker();
         readTasklist();
@@ -61,6 +55,16 @@ public class FrontPage extends AppCompatActivity {
                 startActivity(showCompleted);
             }
         });
+
+        ImageView imgSettings = (ImageView)findViewById(R.id.imgFPSettings);
+        imgSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent showSettings = new Intent(FrontPage.this, SettingsPage.class);
+                startActivity(showSettings);
+            }
+        });
+
     }
 
     public void readWorker(){
@@ -76,24 +80,26 @@ public class FrontPage extends AppCompatActivity {
             inputStream.close();
 
         }catch(Exception exception){
-            exception.printStackTrace();
+            Toast.makeText(this, exception.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
     public void readTasklist(){
         try{
+
             FileInputStream inputStreamTask = openFileInput("taskList");
             ObjectInputStream inTask = new ObjectInputStream(inputStreamTask);
-            //int sizeBefore = taskList.size();
+            int sizeBefore = taskList.size();
             taskList = (ArrayList<Task>)inTask.readObject();
-            //int sizeAfter = taskList.size();
-            //Task task = new Task();
-            //task.setLast_id(task.getLast_id()+(sizeAfter - sizeBefore)-1);
+            int sizeAfter = taskList.size();
+            Task task = new Task();
+            task.setLast_id(task.getLast_id()+(sizeAfter - sizeBefore)-1);
             inTask.close();
             inputStreamTask.close();
 
         }catch(Exception exception){
-            Toast.makeText(this, "task not worked", Toast.LENGTH_SHORT).show();
+            Log.v("TaskReadError",exception.getLocalizedMessage());
+                    Toast.makeText(this, exception.getMessage(), Toast.LENGTH_SHORT).show();
             exception.printStackTrace();
         }
     }
