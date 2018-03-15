@@ -10,7 +10,6 @@ import android.hardware.SensorManager;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -27,19 +26,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.StringTokenizer;
 
+import static uk.ac.napier.maintenanceapp.CompletedList.completedTasks;
 import static uk.ac.napier.maintenanceapp.TaskList.taskList;
 
 public class TaskPage extends AppCompatActivity {
 
-    //Button btnComplete = (Button) findViewById(R.id.btnCompleted);
     Bitmap bitmapPicture;
-    SensorManager sensorManager;
-    //current acceleration value and gravity
-    float accelerateVal;
-    //last acceleration value and gravity
-    float accelerateLast;
-    //difference in acceleration value from gravity
-    float shake;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,14 +39,6 @@ public class TaskPage extends AppCompatActivity {
         setContentView(R.layout.activity_task_page2);
 
         try {
-
-            sensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
-            sensorManager.registerListener(sensorListener, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
-            accelerateVal = SensorManager.GRAVITY_EARTH;
-            accelerateLast = SensorManager.GRAVITY_EARTH;
-            shake = 0.00f;
-
-
             final Spinner spnTasks = (Spinner) findViewById(R.id.spnTasks);
             final ArrayList<String> tasks = new ArrayList<>();
             for (Task task : taskList) {
@@ -130,21 +114,23 @@ public class TaskPage extends AppCompatActivity {
             btnDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String selectedTask = spnTasks.getSelectedItem().toString();
-                    StringTokenizer taskTokens = new StringTokenizer(selectedTask, ".");
-                    String stringID = taskTokens.nextToken();
+                    if (spnTasks.getSelectedItem() != null) {
+                        String selectedTask = spnTasks.getSelectedItem().toString();
+                        StringTokenizer taskTokens = new StringTokenizer(selectedTask, ".");
+                        String stringID = taskTokens.nextToken();
 
-                    list.remove(Integer.parseInt(stringID));
+                        list.remove(Integer.parseInt(stringID));
 
-                    txtDateSubmitted.setText("");
-                    txtDesc.setText("");
-                    txtNotes.setText("");
-                    txtTitle.setText("");
-                    ImageView imgPicture = (ImageView) findViewById(R.id.imgPicture);
-                    imgPicture.setImageResource(android.R.color.transparent);
-                    taskAdapter.notifyDataSetChanged();
+                        txtDateSubmitted.setText("");
+                        txtDesc.setText("");
+                        txtNotes.setText("");
+                        txtTitle.setText("");
+                        ImageView imgPicture = (ImageView) findViewById(R.id.imgPicture);
+                        imgPicture.setImageResource(android.R.color.transparent);
+                        taskAdapter.notifyDataSetChanged();
 
-                    write();
+                        write();
+                    }
                 }
             });
 
@@ -185,9 +171,7 @@ public class TaskPage extends AppCompatActivity {
                         Toast.makeText(TaskPage.this, "Task completed", Toast.LENGTH_SHORT).show();
 
                         write();
-                    }
-                    else {
-                        Log.v("NothingSelected", "NOthing");
+                        writeComplete();
                     }
                 }
             });
@@ -205,30 +189,32 @@ public class TaskPage extends AppCompatActivity {
             btnUpdate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String selectedTask = spnTasks.getSelectedItem().toString();
-                    StringTokenizer taskTokens = new StringTokenizer(selectedTask, ".");
-                    String stringID = taskTokens.nextToken();
-                    Task task;
-                    task = list.find(Integer.parseInt(stringID));
-
                     try {
-                        //read in due date
-                        DatePicker dteDueDate = (DatePicker) findViewById(R.id.dteDateDue);
-                        int dueDay = dteDueDate.getDayOfMonth();
-                        int dueMonth = dteDueDate.getMonth() + 1;
-                        int dueYear = dteDueDate.getYear();
-                        String dateDueString = dueDay + "/" + dueMonth + "/" + dueYear;
+                        if (spnTasks.getSelectedItem() != null) {
+                            String selectedTask = spnTasks.getSelectedItem().toString();
+                            StringTokenizer taskTokens = new StringTokenizer(selectedTask, ".");
+                            String stringID = taskTokens.nextToken();
+                            Task task;
+                            task = list.find(Integer.parseInt(stringID));
 
-                        task.setHome(spnHome.getSelectedItem().toString());
-                        task.setTitle(txtTitle.getText().toString());
-                        task.setPriority(spnPriority.getSelectedItem().toString());
-                        task.setDateDue(dateDueString);
-                        task.setDesc(txtDesc.getText().toString());
-                        task.setNotes(txtNotes.getText().toString());
-                        task.setPicture(bitmapPicture);
-                        Toast.makeText(TaskPage.this, "Task updated", Toast.LENGTH_SHORT).show();
+                            //read in due date
+                            DatePicker dteDueDate = (DatePicker) findViewById(R.id.dteDateDue);
+                            int dueDay = dteDueDate.getDayOfMonth();
+                            int dueMonth = dteDueDate.getMonth() + 1;
+                            int dueYear = dteDueDate.getYear();
+                            String dateDueString = dueDay + "/" + dueMonth + "/" + dueYear;
 
-                        write();
+                            task.setHome(spnHome.getSelectedItem().toString());
+                            task.setTitle(txtTitle.getText().toString());
+                            task.setPriority(spnPriority.getSelectedItem().toString());
+                            task.setDateDue(dateDueString);
+                            task.setDesc(txtDesc.getText().toString());
+                            task.setNotes(txtNotes.getText().toString());
+                            task.setPicture(bitmapPicture);
+                            Toast.makeText(TaskPage.this, "Task updated", Toast.LENGTH_SHORT).show();
+
+                            write();
+                        }
                     }catch(Exception exception){
                         Toast.makeText(TaskPage.this, exception.getMessage(), Toast.LENGTH_SHORT).show();
                     }
@@ -251,35 +237,24 @@ public class TaskPage extends AppCompatActivity {
         }
     }
 
-    private final SensorEventListener sensorListener = new SensorEventListener() {
-        @Override
-        public void onSensorChanged(SensorEvent event) {
-            float x = event.values[0];
-            float y = event.values[1];
-            float z = event.values[2];
-
-            accelerateLast = accelerateVal;
-            accelerateVal = (float)Math.sqrt((double) x*x + y*y + z*z);
-            float delta = accelerateVal - accelerateLast;
-            shake = shake * 0.09f + delta;
-
-            if(shake > 12){
-                Button btnComplete = (Button) findViewById(R.id.btnCompleted);
-                btnComplete.performClick();
-            }
-        }
-
-        @Override
-        public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
-        }
-    };
-
     public void write(){
         try {
             FileOutputStream fileOutputStream = openFileOutput("taskList", Context.MODE_PRIVATE);
             ObjectOutputStream out = new ObjectOutputStream(fileOutputStream);
             out.writeObject(taskList);
+            out.close();
+            fileOutputStream.close();
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void writeComplete(){
+        try {
+            FileOutputStream fileOutputStream = openFileOutput("completeTaskList", Context.MODE_PRIVATE);
+            ObjectOutputStream out = new ObjectOutputStream(fileOutputStream);
+            out.writeObject(completedTasks);
             out.close();
             fileOutputStream.close();
 

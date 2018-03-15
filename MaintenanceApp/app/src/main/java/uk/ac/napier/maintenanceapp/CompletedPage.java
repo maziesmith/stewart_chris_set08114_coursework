@@ -37,23 +37,16 @@ public class CompletedPage extends AppCompatActivity {
             final CompletedList completedList = new CompletedList();
 
 
-            //Home select spinner
-            final Spinner spnHome = (Spinner) findViewById(R.id.spnHome);
-            String[] homes = new String[]{"Viewpark", "Abercorn", "Spring Gardens"};
-            final ArrayAdapter<String> homeAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, homes);
-            spnHome.setAdapter(homeAdapter);
+            //Home select
+            final TextView lblHome = (TextView)findViewById(R.id.lblHome);
 
             //Priority select spinner
-            final Spinner spnPriority = (Spinner) findViewById(R.id.spnPriority);
-            String[] priorities = new String[]{"Low", "Medium", "High", "Urgent"};
-            final ArrayAdapter<String> prioritiesAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, priorities);
-            spnPriority.setAdapter(prioritiesAdapter);
-            spnPriority.setSelection(prioritiesAdapter.getPosition("Medium"));
-
-            final EditText txtTitle = (EditText)findViewById(R.id.txtTitle);
-            final EditText txtDesc = (EditText) findViewById(R.id.txtDesc);
-            final EditText txtNotes = (EditText) findViewById(R.id.txtNotes);
+            final TextView txtTitle = (TextView)findViewById(R.id.txtTitle);
+            final TextView txtDesc = (TextView) findViewById(R.id.txtDesc);
+            final TextView txtPriorityShow = (TextView)findViewById(R.id.txtPriorityShow);
+            final TextView txtNotes = (TextView) findViewById(R.id.txtNotes);
             final TextView txtDateSubmitted = (TextView) findViewById(R.id.txtDateSubmitted);
+            final TextView txtDateDue = (TextView)findViewById(R.id.txtDateDueShow);
 
             spnTasks.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
@@ -65,19 +58,12 @@ public class CompletedPage extends AppCompatActivity {
 
                     task = completedList.find(Integer.parseInt(stringID));
 
-                    int spinnerPosition = homeAdapter.getPosition(task.getHome());
-                    spnHome.setSelection(spinnerPosition);
+                    lblHome.setText(task.getHome());
                     txtTitle.setText(task.getTitle());
-                    spinnerPosition = prioritiesAdapter.getPosition(task.getPriority());
-                    spnPriority.setSelection(spinnerPosition);
-                    txtDateSubmitted.setText(task.getDateSubmitted());
-                    StringTokenizer dateTokens = new StringTokenizer(task.getDateDue(), "/");
-                    int day = Integer.parseInt(dateTokens.nextToken());
-                    int month = Integer.parseInt(dateTokens.nextToken()) - 1;
-                    int year = Integer.parseInt(dateTokens.nextToken());
-                    DatePicker dteDueDate = (DatePicker) findViewById(R.id.dteDateDue);
-                    dteDueDate.updateDate(year, month, day);
+                    txtPriorityShow.setText(task.getPriority());
                     txtDesc.setText(task.getDesc());
+                    txtDateSubmitted.setText(task.getDateSubmitted());
+                    txtDateDue.setText(task.getDateDue());
                     ImageView imgPicture = (ImageView) findViewById(R.id.imgPicture);
                     imgPicture.setImageBitmap(task.getPicture());
                     txtNotes.setText(task.getNotes());

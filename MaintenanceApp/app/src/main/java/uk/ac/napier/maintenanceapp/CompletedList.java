@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 /**
  * Created by stech on 08/02/2018.
+ *
+ * List holds all tasks that have been completed
  */
 
 public class CompletedList {

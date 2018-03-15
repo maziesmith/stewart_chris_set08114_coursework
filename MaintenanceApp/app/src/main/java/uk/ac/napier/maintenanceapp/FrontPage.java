@@ -3,7 +3,6 @@ package uk.ac.napier.maintenanceapp;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -11,6 +10,7 @@ import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
+import static uk.ac.napier.maintenanceapp.CompletedList.completedTasks;
 import static uk.ac.napier.maintenanceapp.TaskList.taskList;
 import static uk.ac.napier.maintenanceapp.WorkerList.workerList;
 
@@ -24,6 +24,7 @@ public class FrontPage extends AppCompatActivity {
 
         readWorker();
         readTasklist();
+        readCompleteList();
 
         Button btnReport = (Button) findViewById(R.id.btnReport);
         btnReport.setOnClickListener(new View.OnClickListener() {
@@ -77,7 +78,7 @@ public class FrontPage extends AppCompatActivity {
             inputStream.close();
 
         }catch(Exception exception){
-            Log.v("WorkerReadError",exception.getLocalizedMessage());
+            exception.getMessage();
         }
     }
 
@@ -95,7 +96,24 @@ public class FrontPage extends AppCompatActivity {
             inputStreamTask.close();
 
         }catch(Exception exception){
-            Log.v("TaskReadError",exception.getLocalizedMessage());
+            exception.getMessage();
+        }
+    }
+
+    public void readCompleteList(){
+        try{
+            FileInputStream inputStream = openFileInput("completedTaskList");
+            ObjectInputStream in = new ObjectInputStream(inputStream);
+            int sizeBefore = completedTasks.size();
+            completedTasks = (ArrayList<Task>)in.readObject();
+            int sizeAfter = completedTasks.size();
+            Task task = new Task();
+            task.setLast_id(task.getLast_id()+(sizeAfter - sizeBefore)-1);
+            in.close();
+            inputStream.close();
+
+        }catch(Exception exception){
+            exception.getMessage();
         }
     }
 }

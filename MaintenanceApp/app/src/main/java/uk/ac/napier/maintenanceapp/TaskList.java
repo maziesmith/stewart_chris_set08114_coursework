@@ -8,6 +8,8 @@ import static uk.ac.napier.maintenanceapp.CompletedList.completedTasks;
 
 /**
  * Created by stech on 08/02/2018.
+ *
+ * List holds all tasks that are outstanding
  */
 
 public class TaskList implements Serializable{
@@ -45,7 +47,7 @@ public class TaskList implements Serializable{
         for (int i = 0; i < taskList.size(); i++) {
             if (id == taskList.get(i).getId()) {
                 completedTasks.add(taskList.get(i));
-                taskList.remove(id);
+                taskList.remove(i);
             }
         }
     }

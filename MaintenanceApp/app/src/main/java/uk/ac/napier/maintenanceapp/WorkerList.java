@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 /**
  * Created by stech on 11/02/2018.
+ *
+ * List holds all worker profiles
  */
 
 public class WorkerList implements Serializable {

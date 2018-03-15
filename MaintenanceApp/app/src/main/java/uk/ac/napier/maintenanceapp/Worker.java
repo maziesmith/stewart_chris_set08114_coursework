@@ -7,6 +7,8 @@ import java.io.Serializable;
 
 /**
  * Created by stech on 11/02/2018.
+ *
+ * Class that holds all information about an individual worker
  */
 
 public class Worker implements Serializable{
