@@ -7,9 +7,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
-
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
@@ -80,7 +77,7 @@ public class FrontPage extends AppCompatActivity {
             inputStream.close();
 
         }catch(Exception exception){
-            Toast.makeText(this, exception.getMessage(), Toast.LENGTH_SHORT).show();
+            Log.v("WorkerReadError",exception.getLocalizedMessage());
         }
     }
 
@@ -99,8 +96,6 @@ public class FrontPage extends AppCompatActivity {
 
         }catch(Exception exception){
             Log.v("TaskReadError",exception.getLocalizedMessage());
-                    Toast.makeText(this, exception.getMessage(), Toast.LENGTH_SHORT).show();
-            exception.printStackTrace();
         }
     }
 }

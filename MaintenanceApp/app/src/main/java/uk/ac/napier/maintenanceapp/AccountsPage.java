@@ -191,7 +191,7 @@ public class AccountsPage extends AppCompatActivity {
                         worker.setEmail(txtEditEmail.getText().toString());
                     }
                     if(!txtEditPhone.getText().toString().isEmpty()){
-                        worker.setPhone(txtEditEmail.getText().toString());
+                        worker.setPhone(txtEditPhone.getText().toString());
                     }
                     if(!txtEditPass.getText().toString().isEmpty()){
                         worker.setPassword(txtEditPass.getText().toString());
